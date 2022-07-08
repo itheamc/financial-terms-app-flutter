@@ -1,3 +1,4 @@
+import 'package:financial_terms/controllers/connectivity_controller.dart';
 import 'package:financial_terms/handler/network/api_urls.dart';
 import 'package:financial_terms/models/finance_term.dart';
 import 'package:financial_terms/utils/json_parser.dart';
@@ -32,6 +33,10 @@ class TermsController extends GetxController {
   /// Method to get financial terms from the server
   Future<void> fetchTerms() async {
     if (fetchingTerms) {
+      return;
+    }
+
+    if (!Get.find<ConnectivityController>().hasInternet) {
       return;
     }
 

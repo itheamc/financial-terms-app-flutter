@@ -1,3 +1,4 @@
+import 'package:financial_terms/components/a_button.dart';
 import 'package:financial_terms/config/a_theme.dart';
 import 'package:financial_terms/config/routes.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _WelcomePageState extends State<WelcomePage> {
             widthFactor: 1,
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: ATheme.paddingMedium,
+                horizontal: FinancialTermsAppTheme.paddingMedium,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -40,7 +41,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     ),
                   ),
                   SizedBox(
-                    height: ATheme.paddingXSmall,
+                    height: FinancialTermsAppTheme.paddingXSmall,
                   ),
                   Text(
                     "Welcome to Financial Terms!",
@@ -54,35 +55,21 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: ATheme.paddingMedium),
+            padding: EdgeInsets.symmetric(
+                horizontal: FinancialTermsAppTheme.paddingMedium),
             child: Image.asset(
               "assets/images/learn.png",
             ),
           ),
-          Material(
-            color: theme.buttonTheme.colorScheme?.primary,
-            borderRadius: BorderRadius.circular(ATheme.radiusXLarge),
-            elevation: 50.0,
-            shadowColor: theme.dividerColor.withOpacity(0.10),
-            child: InkWell(
-              onTap: () async {
-                final session = Get.find<SessionHandler>();
-                await session.used(true);
-                Get.offNamed(Routes.home);
-              },
-              borderRadius: BorderRadius.circular(ATheme.radiusXLarge),
-              child: Ink(
-                padding: EdgeInsets.symmetric(
-                  horizontal: ATheme.paddingXXXLarge,
-                  vertical: ATheme.paddingSmall + ATheme.paddingXXSmall,
-                ),
-                child: Text(
-                  "Let's Start Learning",
-                  style: GoogleFonts.arsenal(
-                    fontSize: 16.0,
-                  ),
-                ),
-              ),
+          AButton(
+            onPressed: () async {
+              final session = Get.find<SessionHandler>();
+              await session.used(true);
+              Get.offNamed(Routes.home);
+            },
+            label: "Let's Start Learning",
+            labelStyle: GoogleFonts.arsenal(
+              fontSize: 16.0,
             ),
           ),
         ],

@@ -33,7 +33,7 @@ class ALoadingIndicator extends StatelessWidget {
               children: [
                 _spinningLines(theme),
                 SizedBox(
-                  height: ATheme.paddingMedium,
+                  height: FinancialTermsAppTheme.paddingMedium,
                 ),
                 Text(
                   "$label",
@@ -54,6 +54,6 @@ class ALoadingIndicator extends StatelessWidget {
         itemCount: lineCount,
         lineWidth: lineWidth,
         size: size,
-        duration: duration ?? ATheme.durationFast * 6,
+        duration: duration ?? FinancialTermsAppTheme.durationFast * 6,
       );
 }

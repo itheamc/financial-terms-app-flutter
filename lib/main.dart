@@ -28,7 +28,7 @@ class FinancialTermsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final aTheme = ATheme();
+    final aTheme = FinancialTermsAppTheme();
     return GetMaterialApp(
       title: 'Financial Terms',
       theme: aTheme.theme,

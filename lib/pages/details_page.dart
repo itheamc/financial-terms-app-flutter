@@ -23,7 +23,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
     final List<String> desc =
         widget.financeTerm != null && widget.financeTerm!.body != null
-            ? widget.financeTerm!.body!.split(". ")
+            ? widget.financeTerm!.body!.replaceAll("i.e.", "______").split(". ")
             : [];
 
     return Scaffold(
@@ -37,7 +37,7 @@ class _DetailsPageState extends State<DetailsPage> {
               onPressed: () {
                 Get.back();
               },
-              padding: EdgeInsets.all(ATheme.paddingXSmall),
+              padding: EdgeInsets.all(FinancialTermsAppTheme.paddingXSmall),
               splashRadius: 24.0,
               icon: Icon(
                 Icons.arrow_back_ios_outlined,
@@ -50,8 +50,8 @@ class _DetailsPageState extends State<DetailsPage> {
               collapseMode: CollapseMode.pin,
               titlePadding: EdgeInsets.only(
                 left: 60.0,
-                bottom: ATheme.paddingMedium,
-                right: ATheme.paddingMedium,
+                bottom: FinancialTermsAppTheme.paddingMedium,
+                right: FinancialTermsAppTheme.paddingMedium,
               ),
               title: Text(
                 "${widget.financeTerm?.title}",
@@ -69,11 +69,11 @@ class _DetailsPageState extends State<DetailsPage> {
             delegate: SliverChildBuilderDelegate(
               (context, index) => Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: ATheme.paddingLarge,
-                  vertical: ATheme.paddingMedium,
+                  horizontal: FinancialTermsAppTheme.paddingLarge,
+                  vertical: FinancialTermsAppTheme.paddingMedium,
                 ),
                 child: Text(
-                  "${desc[index].trim()}.",
+                  "${desc[index].trim().replaceAll("______", "i.e.")}.",
                   style: GoogleFonts.jost(height: 1.75, fontSize: 16.0),
                 ),
               ),

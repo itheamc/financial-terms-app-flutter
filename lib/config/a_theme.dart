@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ATheme {
+class FinancialTermsAppTheme {
   final Color _primaryColor = const Color(0xff382e75);
   final Color _secondaryColor = const Color(0xff7c6bdb);
 

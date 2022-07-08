@@ -49,7 +49,7 @@ class ACard extends StatelessWidget {
         height: height,
         child: Material(
           type: MaterialType.card,
-          borderRadius: borderRadius ?? BorderRadius.circular(ATheme.radius),
+          borderRadius: borderRadius ?? BorderRadius.circular(FinancialTermsAppTheme.radius),
           elevation: theme.light ? elevation : 0.75,
           shadowColor: shadowColor ??
               (theme.light
@@ -62,12 +62,12 @@ class ACard extends StatelessWidget {
             onTapUp: onTapUp,
             onTapDown: onTapDown,
             hoverColor: Colors.transparent,
-            borderRadius: borderRadius ?? BorderRadius.circular(ATheme.radius),
+            borderRadius: borderRadius ?? BorderRadius.circular(FinancialTermsAppTheme.radius),
             child: Ink(
               padding: padding ?? EdgeInsets.zero,
               decoration: BoxDecoration(
                 borderRadius:
-                    borderRadius ?? BorderRadius.circular(ATheme.radius),
+                    borderRadius ?? BorderRadius.circular(FinancialTermsAppTheme.radius),
                 color: color,
                 gradient: gradient,
                 border: border,

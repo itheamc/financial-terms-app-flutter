@@ -2,9 +2,13 @@ import 'package:financial_terms/components/a_card.dart';
 import 'package:financial_terms/components/a_loading_indicator.dart';
 import 'package:financial_terms/config/a_theme.dart';
 import 'package:financial_terms/config/routes.dart';
+import 'package:financial_terms/controllers/connectivity_controller.dart';
 import 'package:financial_terms/controllers/terms_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../components/a_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final termsController = Get.find<TermsController>();
+  final connectivity = Get.find<ConnectivityController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +39,53 @@ class _HomePageState extends State<HomePage> {
         }
 
         if (terms.isEmpty) {
-          return const Center(
-            child: Text("No data!!,"),
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Something went wrong!!",
+                  style: GoogleFonts.arsenal(fontSize: 20.0),
+                ),
+                AButton(
+                  onPressed: () async {
+                    if (!connectivity.hasInternet) {
+                      Get.showSnackbar(
+                        GetSnackBar(
+                          messageText: Text(
+                            "No Internet Connection!!",
+                            style: GoogleFonts.arsenal(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          duration: const Duration(
+                            milliseconds: 2000,
+                          ),
+                          backgroundColor: theme.dividerColor.withOpacity(0.75),
+                          margin: EdgeInsets.all(
+                              FinancialTermsAppTheme.paddingMedium),
+                          borderRadius: FinancialTermsAppTheme.radiusXSmall,
+                        ),
+                      );
+                      return;
+                    }
+
+                    await termsController.fetchTerms();
+                  },
+                  padding: EdgeInsets.symmetric(
+                    horizontal: FinancialTermsAppTheme.paddingXXLarge,
+                    vertical: FinancialTermsAppTheme.paddingSmall,
+                  ),
+                  margin: EdgeInsets.only(
+                    top: FinancialTermsAppTheme.paddingSmall,
+                  ),
+                  label: "Reload",
+                  labelStyle: GoogleFonts.arsenal(
+                    fontSize: 16.0,
+                  ),
+                ),
+              ],
+            ),
           );
         }
 
@@ -48,11 +98,11 @@ class _HomePageState extends State<HomePage> {
                     Get.toNamed(Routes.details, arguments: terms[index]);
                   },
                   margin: EdgeInsets.symmetric(
-                    horizontal: ATheme.paddingXSmall,
-                    vertical: ATheme.paddingSmall,
+                    horizontal: FinancialTermsAppTheme.paddingXSmall,
+                    vertical: FinancialTermsAppTheme.paddingSmall,
                   ),
                   padding: EdgeInsets.all(
-                    ATheme.paddingMedium,
+                    FinancialTermsAppTheme.paddingMedium,
                   ),
                   borderRadius: BorderRadius.zero,
                   child: Column(
