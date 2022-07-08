@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:financial_terms/components/a_loading_indicator.dart';
+import 'package:financial_terms/handler/session/session_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,12 +27,22 @@ class _SplashPageState extends State<SplashPage> {
     return const Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      body: Center(child: CircularProgressIndicator()),
+      body: ALoadingIndicator(
+        label: "Financial Terms",
+        size: 75.0,
+      ),
     );
   }
 
   /// On Timer Finished
   void _handleNextRoute() {
+    final session = Get.find<SessionHandler>();
+
+    if (session.newUser) {
+      Get.offNamed(Routes.welcome);
+      return;
+    }
+
     Get.offNamed(Routes.home);
   }
 }

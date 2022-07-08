@@ -1,4 +1,7 @@
+import 'package:financial_terms/models/finance_term.dart';
+import 'package:financial_terms/pages/details_page.dart';
 import 'package:financial_terms/pages/not_found_page.dart';
+import 'package:financial_terms/pages/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -26,9 +29,26 @@ class RoutesHandler {
           transition: Transition.zoom,
         );
         break;
+      case Routes.welcome:
+        pageRoute = GetPageRoute(
+          page: () => const WelcomePage(),
+          settings: settings,
+          transition: Transition.upToDown,
+        );
+        break;
       case Routes.home:
         pageRoute = GetPageRoute(
           page: () => const HomePage(),
+          settings: settings,
+          transition: Transition.rightToLeftWithFade,
+        );
+        break;
+      case Routes.details:
+        pageRoute = GetPageRoute(
+          page: () => DetailsPage(
+              financeTerm: settings.arguments is FinanceTerm
+                  ? settings.arguments as FinanceTerm
+                  : null),
           settings: settings,
           transition: Transition.rightToLeftWithFade,
         );
@@ -42,17 +62,4 @@ class RoutesHandler {
     }
     return pageRoute;
   }
-
-  ///--------------------------------@mit------------------------------
-  /// Method to return the get pages
-  static List<GetPage<dynamic>> get routePages => [
-        GetPage(
-          name: Routes.splash,
-          page: () => const SplashPage(),
-        ),
-        GetPage(
-          name: Routes.home,
-          page: () => const HomePage(),
-        ),
-      ];
 }

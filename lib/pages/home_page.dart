@@ -1,5 +1,7 @@
 import 'package:financial_terms/components/a_card.dart';
+import 'package:financial_terms/components/a_loading_indicator.dart';
 import 'package:financial_terms/config/a_theme.dart';
+import 'package:financial_terms/config/routes.dart';
 import 'package:financial_terms/controllers/terms_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,8 +26,10 @@ class _HomePageState extends State<HomePage> {
         final terms = termsController.terms;
 
         if (loading) {
-          return const Center(
-            child: Text("Loading..."),
+          return const ALoadingIndicator(
+            label: "Fetching data...",
+            size: 42.0,
+            lineWidth: 2.75,
           );
         }
 
@@ -40,7 +44,9 @@ class _HomePageState extends State<HomePage> {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) => ACard(
-                  onClick: () {},
+                  onClick: () {
+                    Get.toNamed(Routes.details, arguments: terms[index]);
+                  },
                   margin: EdgeInsets.symmetric(
                     horizontal: ATheme.paddingXSmall,
                     vertical: ATheme.paddingSmall,

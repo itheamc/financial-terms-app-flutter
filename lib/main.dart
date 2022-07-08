@@ -6,8 +6,20 @@ import 'package:get/get.dart';
 import 'config/routes.dart';
 import 'controllers/connectivity_controller.dart';
 import 'handler/route/routes_handler.dart';
+import 'handler/session/session_handler.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  /// For Session Handling
+  Get.putAsync<SessionHandler>(
+    () async {
+      final sessionHandler = await SessionHandler.getInstance();
+      return sessionHandler;
+    },
+    permanent: true,
+  );
+
   runApp(const FinancialTermsApp());
 }
 

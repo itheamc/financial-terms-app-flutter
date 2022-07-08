@@ -88,7 +88,7 @@ class ATheme {
   final Color _kHintColor = const Color(0xffbcbcbc);
   final Color _kDividerColor = const Color(0xaededede);
   final Color _kErrorColor = const Color(0xffcd0909);
-  final Color _kButtonColor = const Color(0xff1BB792);
+  final Color _kButtonColor = const Color(0xffdbddf2);
   final Color _kButtonSecondaryDarkColor = const Color(0xff929293);
   final Color _kButtonSecondaryLightColor = const Color(0xffe4e4e5);
   final Color _kBackgroundColor = Colors.white;
