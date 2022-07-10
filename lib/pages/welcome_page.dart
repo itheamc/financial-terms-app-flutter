@@ -34,20 +34,46 @@ class _WelcomePageState extends State<WelcomePage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Hello There,",
-                    style: GoogleFonts.arsenal(
-                      fontSize: 24.0,
+                  ShaderMask(
+                    blendMode: BlendMode.srcATop,
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        colors: [
+                          theme.primaryColor,
+                          theme.colorScheme.secondary,
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ).createShader(bounds);
+                    },
+                    child: Text(
+                      "Hello,",
+                      style: GoogleFonts.jost(
+                        fontSize: 24.0,
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: FinancialTermsAppTheme.paddingXSmall,
                   ),
-                  Text(
-                    "Welcome to Financial Terms!",
-                    style: GoogleFonts.arsenal(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
+                  ShaderMask(
+                    blendMode: BlendMode.srcATop,
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        colors: [
+                          theme.primaryColor,
+                          theme.colorScheme.secondary,
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ).createShader(bounds);
+                    },
+                    child: Text(
+                      "Welcome to Financial Terms!",
+                      style: GoogleFonts.jost(
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -68,7 +94,7 @@ class _WelcomePageState extends State<WelcomePage> {
               Get.offNamed(Routes.home);
             },
             label: "Let's Start Learning",
-            labelStyle: GoogleFonts.arsenal(
+            labelStyle: GoogleFonts.jost(
               fontSize: 16.0,
             ),
           ),

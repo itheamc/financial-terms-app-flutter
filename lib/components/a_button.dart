@@ -45,8 +45,7 @@ class AButton extends StatelessWidget {
             padding: padding ??
                 EdgeInsets.symmetric(
                   horizontal: FinancialTermsAppTheme.paddingXXXLarge,
-                  vertical: FinancialTermsAppTheme.paddingSmall +
-                      FinancialTermsAppTheme.paddingXXSmall,
+                  vertical: FinancialTermsAppTheme.paddingSmall,
                 ),
             child: child ??
                 Text(
