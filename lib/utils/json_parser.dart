@@ -20,3 +20,33 @@ Future<List<FinanceTerm>?> parseFinancialTermsJsonData(dynamic data) async {
     return null;
   }
 }
+
+// Future<List<FinanceTerms>?> proceedFinancialTermsData(
+//     List<FinanceTerm> terms) async {
+//   try {
+//     List<FinanceTerms> listOfFt = List.empty(growable: true);
+//     final labels = <String>{};
+//
+//     for (final t in terms) {
+//       if (t.title == null || t.title!.isEmpty) continue;
+//       labels.add(t.title![0]);
+//     }
+//
+//     for (final l in labels) {
+//       final temp = List<FinanceTerm>.empty(growable: true);
+//       for (final t in terms) {
+//         if (t.title != null && t.title!.startsWith(l)) {
+//           temp.add(t);
+//         }
+//       }
+//       listOfFt.add(FinanceTerms(label: l, terms: temp));
+//     }
+//
+//     return listOfFt;
+//   } catch (e) {
+//     if (kDebugMode) {
+//       print("[proceedFinancialTermsData] ---> ${e.toString()}");
+//     }
+//     return null;
+//   }
+// }

@@ -22,7 +22,7 @@ class NetworkInterceptor extends Interceptor {
           headers: response.headers,
           isRedirect: response.isRedirect,
           statusCode: response.statusCode,
-          statusMessage: "Data fetched successfully!!",
+          statusMessage: response.statusMessage ?? "Data fetched successfully!!",
           redirects: response.redirects,
           extra: response.extra,
         ),

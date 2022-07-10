@@ -1,4 +1,3 @@
-import 'package:financial_terms/models/finance_term.dart';
 import 'package:financial_terms/pages/details_page.dart';
 import 'package:financial_terms/pages/not_found_page.dart';
 import 'package:financial_terms/pages/welcome_page.dart';
@@ -46,9 +45,7 @@ class RoutesHandler {
       case Routes.details:
         pageRoute = GetPageRoute(
           page: () => DetailsPage(
-              financeTerm: settings.arguments is FinanceTerm
-                  ? settings.arguments as FinanceTerm
-                  : null),
+              id: settings.arguments is int ? settings.arguments as int : 0),
           settings: settings,
           transition: Transition.rightToLeftWithFade,
         );

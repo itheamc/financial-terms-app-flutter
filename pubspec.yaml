@@ -19,6 +19,7 @@ dependencies:
   connectivity_plus: ^2.3.5
   google_fonts: ^3.0.1
   shared_preferences: ^2.0.15
+  flutter_sticky_header: ^0.6.3
 
 dev_dependencies:
   flutter_test:

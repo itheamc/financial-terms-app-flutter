@@ -24,3 +24,15 @@ class FinanceTerm {
     );
   }
 }
+
+class FinanceTerms {
+  final String label;
+  final List<FinanceTerm> terms;
+
+  int get count => terms.length;
+
+  FinanceTerms({
+    required this.label,
+    required this.terms,
+  });
+}

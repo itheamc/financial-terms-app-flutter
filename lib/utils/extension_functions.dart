@@ -15,3 +15,21 @@ extension ThemeDataExt on ThemeData {
 
   bool get linuxPlatform => platform == TargetPlatform.linux;
 }
+
+
+/// Extension FUnction On List
+extension ListSortExt on List {
+  /// Function to sort the data
+  /// [V] - It is the data type to sort. e.g. int, double, num, String, DateTime etc.
+  /// [T] - It is an object that's field need to be sorted
+  void toSort<V, T>(Comparable<V> Function(T t) field, bool ascending) {
+    sort((a, b) {
+      final aValue = field(a);
+      final bValue = field(b);
+
+      return ascending
+          ? Comparable.compare(aValue, bValue)
+          : Comparable.compare(bValue, aValue);
+    });
+  }
+}
