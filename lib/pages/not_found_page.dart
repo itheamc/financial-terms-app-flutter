@@ -9,10 +9,7 @@ class NotFoundPage extends StatelessWidget {
 
     return Scaffold(
       body: Center(
-        child: Text(
-          "Page Not Found!!",
-          style: theme.textTheme.headline6,
-        ),
+        child: Image.asset("assets/images/notfound.png"),
       ),
     );
   }

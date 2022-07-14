@@ -1,4 +1,5 @@
 import 'package:financial_terms/controllers/connectivity_controller.dart';
+import 'package:financial_terms/database/a_database.dart';
 import 'package:financial_terms/handler/network/api_urls.dart';
 import 'package:financial_terms/models/finance_term.dart';
 import 'package:financial_terms/utils/extension_functions.dart';
@@ -11,6 +12,7 @@ import '../handler/network/request_handler.dart';
 
 class TermsController extends GetxController {
   NetworkResponse? _networkResponse;
+  ADatabase? aDatabase;
   final _terms = List<FinanceTerm>.empty(growable: true).obs;
   final _filteredTerms = List<FinanceTerm>.empty(growable: true).obs;
 
@@ -27,6 +29,14 @@ class TermsController extends GetxController {
 
   bool get termsFetchedSuccess =>
       _networkResponse != null && _networkResponse!.isSuccess;
+
+  /// Fetching terms on ready
+  @override
+  void onReady() async {
+    super.onReady();
+    aDatabase = await ADatabase.init();
+    fetchTerms();
+  }
 
   /// Getter for labeled finance terms list
   List<FinanceTerms> get labeledTerms {
@@ -64,48 +74,57 @@ class TermsController extends GetxController {
     );
   }
 
-  /// Fetching terms on ready
-  @override
-  void onReady() {
-    super.onReady();
-    if (Get.find<ConnectivityController>().hasInternet) {
-      fetchTerms();
-    }
-  }
-
   /// Method to get financial terms from the server
   Future<void> fetchTerms() async {
     if (fetchingTerms) {
       return;
     }
 
-    if (!Get.find<ConnectivityController>().hasInternet) {
-      return;
-    }
-
     _networkResponse = null;
     _fetchingTerms.value = NetworkRequestStatus.requesting;
 
-    // await Future.delayed(const Duration(milliseconds: 10000));
+    final localTerms = await aDatabase?.terms();
 
-    final response = await RequestHandler.get(ApiUrls.terms);
-    _networkResponse = response;
+    if (localTerms != null && localTerms.isNotEmpty) {
+      final list = await compute<dynamic, List<FinanceTerm>?>(
+          parseFinancialTermsJsonData, localTerms);
+      if (list != null) {
+        list.toSort<String, FinanceTerm>((e) => e.title ?? "", true);
+        _terms.value = list;
+        _filteredTerms.value = list;
+      }
+    } else {
+      if (!Get.find<ConnectivityController>().hasInternet) {
+        _fetchingTerms.value = NetworkRequestStatus.completed;
+        return;
+      }
 
-    if (termsFetchedSuccess) {
-      if (_networkResponse!.hasData &&
-          _networkResponse!.data! is List &&
-          _networkResponse!.data!.isNotEmpty) {
-        final list = await compute<dynamic, List<FinanceTerm>?>(
-            parseFinancialTermsJsonData, _networkResponse!.data!);
-        if (list != null) {
-          list.toSort<String, FinanceTerm>((e) => e.title ?? "", true);
-          _terms.value = list;
-          _filteredTerms.value = list;
+      final response = await RequestHandler.get(ApiUrls.terms);
+      _networkResponse = response;
+
+      if (termsFetchedSuccess) {
+        if (_networkResponse!.hasData &&
+            _networkResponse!.data! is List &&
+            _networkResponse!.data!.isNotEmpty) {
+          final list = await compute<dynamic, List<FinanceTerm>?>(
+              parseFinancialTermsJsonData, _networkResponse!.data!);
+          if (list != null) {
+            list.toSort<String, FinanceTerm>((e) => e.title ?? "", true);
+            _terms.value = list;
+            _filteredTerms.value = list;
+          }
         }
       }
     }
 
     _fetchingTerms.value = NetworkRequestStatus.completed;
+
+    /// Adding to the database
+    if (localTerms == null || localTerms.isEmpty) {
+      for (final t in _terms) {
+        await aDatabase?.insertTerm(t);
+      }
+    }
   }
 
   /// Filter the financial terms
@@ -117,5 +136,11 @@ class TermsController extends GetxController {
     } else {
       _filteredTerms.value = _terms;
     }
+  }
+
+  @override
+  void onClose() async {
+    await aDatabase?.close();
+    super.onClose();
   }
 }

@@ -33,6 +33,7 @@ class FinancialTermsApp extends StatelessWidget {
       title: 'Financial Terms',
       theme: aTheme.theme,
       darkTheme: aTheme.darkTheme,
+      themeMode: ThemeMode.system,
       navigatorKey: Get.key,
       initialRoute: Routes.splash,
       onGenerateRoute: RoutesHandler.handleOnGenerateRoute,

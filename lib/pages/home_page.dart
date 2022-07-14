@@ -68,46 +68,55 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  "${termsController.networkResponse?.message}",
-                  style: GoogleFonts.arsenal(fontSize: 20.0),
+                FractionallySizedBox(
+                  widthFactor: 0.7,
+                  child: Image.asset(connectivity.hasInternet
+                      ? "assets/images/nodata.png"
+                      : "assets/images/nointernet.png"),
                 ),
-                AButton(
-                  onPressed: () async {
-                    if (!connectivity.hasInternet) {
-                      Get.showSnackbar(
-                        GetSnackBar(
-                          messageText: Text(
-                            "No Internet Connection!!",
-                            style: GoogleFonts.jost(
-                              fontSize: 16.0,
-                              color: theme.textTheme.caption?.color,
+                SizedBox(
+                  height: FinancialTermsAppTheme.paddingXLarge,
+                ),
+                FractionallySizedBox(
+                  widthFactor: 0.6,
+                  child: AButton(
+                    onPressed: () async {
+                      if (!connectivity.hasInternet) {
+                        Get.showSnackbar(
+                          GetSnackBar(
+                            messageText: Text(
+                              "No Internet Connection!!",
+                              style: GoogleFonts.jost(
+                                fontSize: 16.0,
+                                color: theme.textTheme.caption?.color,
+                              ),
                             ),
+                            duration: const Duration(
+                              milliseconds: 2000,
+                            ),
+                            backgroundColor:
+                                theme.primaryColor.withOpacity(0.10),
+                            margin: EdgeInsets.all(
+                                FinancialTermsAppTheme.paddingMedium),
+                            borderRadius: FinancialTermsAppTheme.radiusXSmall,
                           ),
-                          duration: const Duration(
-                            milliseconds: 2000,
-                          ),
-                          backgroundColor: theme.primaryColor.withOpacity(0.10),
-                          margin: EdgeInsets.all(
-                              FinancialTermsAppTheme.paddingMedium),
-                          borderRadius: FinancialTermsAppTheme.radiusXSmall,
-                        ),
-                      );
-                      return;
-                    }
+                        );
+                        return;
+                      }
 
-                    await termsController.fetchTerms();
-                  },
-                  padding: EdgeInsets.symmetric(
-                    horizontal: FinancialTermsAppTheme.paddingXXLarge,
-                    vertical: FinancialTermsAppTheme.paddingSmall,
-                  ),
-                  margin: EdgeInsets.only(
-                    top: FinancialTermsAppTheme.paddingSmall,
-                  ),
-                  label: "Reload",
-                  labelStyle: GoogleFonts.jost(
-                    fontSize: 16.0,
+                      await termsController.fetchTerms();
+                    },
+                    padding: EdgeInsets.symmetric(
+                      horizontal: FinancialTermsAppTheme.paddingXXXLarge,
+                      vertical: FinancialTermsAppTheme.paddingSmall,
+                    ),
+                    margin: EdgeInsets.only(
+                      top: FinancialTermsAppTheme.paddingSmall,
+                    ),
+                    label: "Reload",
+                    labelStyle: GoogleFonts.jost(
+                      fontSize: 16.0,
+                    ),
                   ),
                 ),
               ],

@@ -54,6 +54,7 @@ class AButton extends StatelessWidget {
                       GoogleFonts.arsenal(
                         fontSize: 16.0,
                       ),
+                  textAlign: TextAlign.center,
                 ),
           ),
         ),
